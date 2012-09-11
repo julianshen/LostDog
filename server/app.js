@@ -23,8 +23,7 @@ app.use(express.cookieParser());
 app.use(express.session({ secret: process.env.SESSION_SECRET || 'mysecret11' }));
 app.use(require('faceplate').middleware({
     app_id: process.env.FACEBOOK_APPID,
-    secret: process.env.FACEBOOK_SECRET,
-    scope:  'user_about_me,'
+    secret: process.env.FACEBOOK_SECRET
   })
 );
 
@@ -41,6 +40,13 @@ app.get('/', function(req,res) {
         req: req,
         app: app,
         app_id: process.env.FACEBOOK_APPID,
+    });
+});
+
+app.get('/picpicker', function(req, res) {
+    res.render('picpicker.ejs', {
+        req:req,
+        app:app,
     });
 });
 

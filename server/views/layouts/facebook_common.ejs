@@ -1,4 +1,4 @@
-<html>
+<html ng-app>
 <head>
 <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
 </head>
@@ -6,6 +6,7 @@
 <div id="fb-root"></div>
 <script>
   function __onLogin(response) {
+      document.token = response.authResponse.accessToken;
       if(typeof(onFbLogin) == 'function') { 
           onFbLogin(response);
       } 
@@ -60,7 +61,7 @@
           if(FB) {
                   FB.login(function(response) {
                            // handle the response
-                  }, {scope: 'offline_access' });
+                  }, {scope: 'user_about_me, user_activities, user_photos, publish_stream' });
           }
   }
 </script>
