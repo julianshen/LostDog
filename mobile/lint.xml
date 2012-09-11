@@ -2,5 +2,6 @@
 <lint>
     <issue id="NewApi">
         <ignore path="src/com/android/whIsmydog/MainActivity.java" />
+        <ignore path="src/com/android/whIsmydog/PetListActivity.java" />
     </issue>
 </lint>

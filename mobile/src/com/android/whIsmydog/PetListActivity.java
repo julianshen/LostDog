@@ -36,6 +36,10 @@ public class PetListActivity extends ListActivity {
 		setListAdapter(mAdapter);
 		mServer = new PetServer();
 		getActionBar().setTitle("Find Pet");
+		refresh();
+	}
+
+	private void refresh() {
 		new AsyncTask<Void, Void, Pet[]>() {
 
 			@Override
@@ -157,6 +161,7 @@ public class PetListActivity extends ListActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_refresh:
+			refresh();
 			return true;
 		}
 		return false;
