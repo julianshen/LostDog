@@ -38,9 +38,42 @@
             $('#formcontainer').show();
             $('#container').hide();
             $('#petimg').attr('src', 'https://graph.facebook.com/' + photoid + '/picture?access_token=' + document.token);
-            $('#owner').val('');
+            $('#owner').val(document.uid);
             $('#photo').val(photoid);
             $scope.title="Send request";
+        }
+
+        $scope.createNew = function() {
+            console.log($scope.petName);
+            console.log($scope.petSpec);
+            console.log($scope.petBreed);
+            console.log($scope.petGender);
+            console.log($scope.petColor);
+            console.log($('#owner').val());
+            console.log($('#photo').val());
+        // req.owner: string (facebook ID)
+        // req.facebook_id: string
+        // req.species: string
+        // req.name: string
+        // req.breed: string
+        // req.gender: 'M' or 'F'
+        // req.color: string
+        // req.place.lat req.place.long
+        // req.photos: an array of string (facebook ID)  
+            var data = {
+               owner: $('#owner').val(),
+               species: $scope.petSpec,
+               breed: $scope.petBreed,
+               gender: $scope.petGender,
+               color: $scope.petColor,
+               owner: $('#owner').val(),
+               photos: $('#photo').val() 
+            };
+
+            jQuery.post('_create', data, function(resp) {
+               console.log('success');
+               console.log(resp);
+            });
         }
  
         $scope.testadd = function() {
@@ -99,15 +132,16 @@
 </div>
 <div id="formcontainer" class="container" >
 <img src="fake" id="petimg"/>
-<form>
-    <label>Name: </label> <input type="text" placeholder="What's his/her name…" name="name" />
-    <label>Breed: </label> <input type="text" placeholder="What's his/her breed…" name="breed" />
-    <label>Gender: </label> <select name="gender"><option>M</option>
+<form ng-submit="createNew()">
+    <label>Name: </label> <input type="text" placeholder="What's his/her name…" name="name" ng-model="petName"/>
+    <label>Species: </label> <input type="text" placeholder="What's his/her name…" name="species" ng-model="petSpec"/>
+    <label>Breed: </label> <input type="text" placeholder="What's his/her breed…" name="breed" ng-model="petBreed" />
+    <label>Gender: </label> <select name="gender" ng-model="petGender"><option>M</option>
   <option>F</option></select>
-    <label>Color: </label><input type="text" placeholder="Color...." name="color" /> 
-    <label>Reward: </label><input type="text" placeholder="100USD" name="reward"/>
-    <input type="hidden" name="owner" id='owner' />
-    <input type="hidden" name="photo" id='photo' />
+    <label>Color: </label><input type="text" placeholder="Color...." name="color" ng-model="petColor"/> 
+    <label>Reward: </label><input type="text" placeholder="100USD" name="reward"ng-model="petReward" />
+    <input type="hidden" name="owner" id='owner' ng-model="petOwner"/>
+    <input type="hidden" name="photo" id='photo' ng-model="petPhoto"/>
 <p>
     <input type="submit" class="btn-primary"/>
 </p>

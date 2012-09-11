@@ -1,7 +1,7 @@
 var cons = require('consolidate');
 var express = require('express');
 var util = require('sys');
-var dbQuery = require('../db/LDquery')();
+var dbQuery = require('./LDquery')();
 
 //Initialize upload folder
 var uploadFolder = __dirname + '/uploads'
@@ -50,10 +50,10 @@ app.get('/', function(req,res) {
 
 app.get('/show', function(req, res) {
 
-    dbQuery.postsGet(req['id'], function (err, records) {
+    dbQuery.postsGet(req.get('id'), function (err, records) {
         
         res.render('show.ejs', {
-            website_url: 'http://heroku.com/',
+            website_url: 'http://http://lostmydog.herokuapp.com',
             req: req,
             app: app,
             app_id: process.env.FACEBOOK_APPID,
@@ -67,6 +67,38 @@ app.get('/picpicker', function(req, res) {
         req:req,
         app:app,
     });
+});
+
+app.post('/_create', function(req, res) {
+    console.log('call create: ' + util.inspect(req.body.owner));
+        // req.owner: string (facebook ID)
+        // req.facebook_id: string
+        // req.species: string
+        // req.name: string
+        // req.breed: string
+        // req.gender: 'M' or 'F'
+        // req.color: string
+        // req.place.lat req.place.long
+        // req.photos: an array of string (facebook ID)
+    var data = {
+        owner: req.body.owner,
+        species: req.body.species,
+        name: req.body.name,
+        breed: req.body.breed,
+        gender: req.body.gender,
+        color: req.body.color,
+        photos: [req.body.photos]};
+ 
+    console.log(util.inspect(data)); 
+    dbQuery.postsNew(data, function(err, obj) {
+        console.log('callback');
+        if(err == null) {
+            res.send(util.inspect(obj));
+        } else { 
+            res.send('[]');
+        }
+    }); 
+
 });
 
 //Facebook channel files
