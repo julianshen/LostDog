@@ -79,6 +79,7 @@ module.exports = function() {
             color: req.color || '',
             where: req.place || {lat: -1, lon:-1},
             photos: req.photos || [],
+            created_date: new Date() + '',
             founded: false
         };
 
