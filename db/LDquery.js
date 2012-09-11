@@ -55,6 +55,7 @@ module.exports = function() {
 
     function postsNew(req, callback) {
         // req.owner: string (facebook ID)
+        // req.facebook_id: string
         // req.species: string
         // req.name: string
         // req.breed: string
@@ -72,6 +73,7 @@ module.exports = function() {
         var newRecord = {
             owner: req.owner,
             species: req.species || 'Unicorn',
+            facebook_id: req.facebook_id || '',
             name: req.name,
             breed: req.breed || '',
             reward: req.reward || '',
