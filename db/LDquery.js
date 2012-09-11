@@ -1,4 +1,5 @@
 var mongo = require('mongodb');
+var uuid = require('node-uuid');
 
 
 var db_server = "alex.mongohq.com";
@@ -53,6 +54,15 @@ module.exports = function() {
 
     }
 
+    function postsGet(post_id, callback) {
+
+        _postsQuery( {'post_id': post_id}, function(err, objs) {
+            dbContext.close();  
+            callback(err, objs);
+        });
+
+    }
+
     function postsNew(req, callback) {
         // req.owner: string (facebook ID)
         // req.facebook_id: string
@@ -82,6 +92,7 @@ module.exports = function() {
             where: req.place || {lat: -1, lon:-1},
             photos: req.photos || [],
             created_date: new Date() + '',
+            post_id: uuid.v1(), 
             founded: false
         };
 
@@ -114,6 +125,7 @@ module.exports = function() {
         postsListAll: postsListAll,
         postsNew: postsNew,
         searchNearby: searchNearby,
+        postsGet: postsGet,
         close: function() {
             if (dbContext !== null)
                 dbContext.close();

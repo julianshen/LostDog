@@ -11,6 +11,8 @@
     "mongoose": "*",
     "consolidate": "*",
     "faceplate": "*",
-    "node-gcm": "*"
+    "node-gcm": "*",
+    "mongodb": "*",
+    "node-uuid": "*"
   }
 }

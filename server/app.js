@@ -49,6 +49,20 @@ app.get('/', function(req,res) {
     });
 });
 
+app.get('/show', function(req, res) {
+
+    dbQuery.postsGet(req['id'], function (err, records) {
+        
+        res.render('show.ejs', {
+            website_url: 'http://heroku.com/',
+            req: req,
+            app: app,
+            app_id: process.env.FACEBOOK_APPID,
+            record: records[0]
+        });
+    });
+});
+
 //Facebook channel files
 app.get('/_channel', function(req, res) {
   var cache_expire = 60*60*24*365;
