@@ -1,0 +1,5 @@
+julian@julian-ThinkPad-L412:~/dev/lostdog/server$ echo $FACEBOOK_APPID
+282764795162547
+julian@julian-ThinkPad-L412:~/dev/lostdog/server$ echo $FACEBOOK_SECRET
+1e0de7f9e7405d7fc4c6e8b8c1593a4e
+
