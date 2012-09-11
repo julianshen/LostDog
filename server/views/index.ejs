@@ -50,12 +50,13 @@
            </div>
            <div class="span8">
                <h3><% rec.name %></h3>
+                <p><b>Species:</b> <%= rec.species %></p>
                <p><b>Breed: </b> <%= rec.breed %></p>
-               <p><b>Gender: </b> <% if (rec.gender === 'M') console.log('Male'); else if(rec.gender === 'F') console.log('Female'); %></p>
+               <p><b>Gender: </b> <%if (rec.gender === 'M') console.log( 'Male' ) ; else if(rec.gender === 'F') console.log('Female'); %></p>
                <p><b>Color: </b> <%= rec.color %></p>
-               <p><b>Description: </b>I live in Palo Alto with Mark and Cilla. I am extremely cute.</p>
                <p><b>Posted by: </b> <img src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/157340_4_3955636_q.jpg" class="img-rounded"/><small>Mark Zuckerberg<small></p>
-               <p><b>Reward:<b><%= rec.reward %></p>
+               <p><b>Reward:</b><%= rec.reward %></p>
+                <p><b>Created at:</b><%= rec.created_date %></p>
 
                 <p><b>Where I last time saw it:</b></p>
                 <p><iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/?ie=UTF8&ll=<%=rec.where.lat %>,<%=rec.where.lon %>&spn=0.010964,0.019269&t=m&z=4&output=embed"></iframe></p>
