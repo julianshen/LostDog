@@ -1,19 +1,23 @@
 LostDog {
+   created_date: string (any format XD), 
+   facebook_id: string (the post's facebook id),
    name: string,
+   species: string (for pet's species)
    breed: string,
-   gender: string (or int),
+   gender: 'M', 'F', '',
    color: string,
    reward: string (or int),
-   where: location,
+   where: {lat: 12345.11, lon: 45678.11},
    owner: string (Facebook ID),
-   photo: string (Facebook photo ID),
+   photos: [string(Facebook ID), string(Facebook ID), ...],
    founded: boolean
 }
 
 straydog {
    breed: string,
-   gender: string (or int),
+   species: string (for animal's species),
+   gender: 'M' or 'F' or '',
    color: string,
-   where: location,
-   photo: string (Facebook photo ID)
+   where: {lat: 12345.11, lon: 45678.9},
+   photos: [string(Facebook ID), string(Facebook ID), ...]
 }

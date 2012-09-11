@@ -1,4 +1,20 @@
-<% inherits('layouts/facebook_common') %>
+<html>
+<head>
+<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+
+<title>I lost my dog: <%=record.name%></title>
+
+<meta property="og:title" content="I lost my dog: <%=record.name%>" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://<%=website_url%>/show?id=<%=req.get('id')%>" />
+<meta property="og:image" content="<%=record.photos[0]%>" />
+<meta property="og:site_name" content="I Lost My Dog"/>
+<meta property="og:description" content="I lost my dog, I need everyone's help to find it back. Help!!!!"/>
+
+</head>
+
+<body>
+
 <script>
   function onFbLogin(response) {
       console.log('The status of the session is: ' + response.status);
@@ -33,39 +49,34 @@
        <div>
        </div>
 
-    <%= records.length %>
-
-
-    <% for (var idx = 0; idx < records.length; idx++) { var rec = records[idx]; %>
        <div class="hero-unit">
            <div class="row" >
            <div class="span2">
 
-            <% for (var pi in rec.photos) {  var photoId = rec.photos[pi]; %>
+            <% for (var pi in record.photos) {  var photoId = record.photos[pi]; %>
 
            <img src="https://fbcdn-photos-a.akamaihd.net/hphotos-ak-ash4/200351_208871915806336_6751907_a.jpg" class="img-polaroid"/>
 
             <% } %>
 
            </div>
+
+
            <div class="span8">
-               <h3><% rec.name %></h3>
-                <p><b>Species:</b> <%= rec.species %></p>
-               <p><b>Breed: </b> <%= rec.breed %></p>
-               <p><b>Gender: </b> <%if (rec.gender === 'M') console.log( 'Male' ) ; else if(rec.gender === 'F') console.log('Female'); %></p>
-               <p><b>Color: </b> <%= rec.color %></p>
+               <h3><% record.name %></h3>
+                <p><b>Species:</b> <%= record.species %></p>
+               <p><b>Breed: </b> <%= record.breed %></p>
+               <p><b>Gender: </b> <%if (record.gender === 'M') console.log( 'Male' ) ; else if(record.gender === 'F') console.log('Female'); %></p>
+               <p><b>Color: </b> <%= record.color %></p>
                <p><b>Posted by: </b> <img src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/157340_4_3955636_q.jpg" class="img-rounded"/><small>Mark Zuckerberg<small></p>
-               <p><b>Reward:</b><%= rec.reward %></p>
-                <p><b>Created at:</b><%= rec.created_date %></p>
+               <p><b>Reward:</b><%= record.reward %></p>
+                <p><b>Created at:</b><%= record.created_date %></p>
 
                 <p><b>Where I last time saw it:</b></p>
-                <p><iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/?ie=UTF8&ll=<%=rec.where.lat %>,<%=rec.where.lon %>&spn=0.010964,0.019269&t=m&z=4&output=embed"></iframe></p>
+                <p><iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/?ie=UTF8&ll=<%=record.where.lat %>,<%=record.where.lon %>&spn=0.010964,0.019269&t=m&z=4&output=embed"></iframe></p>
            </div>
            </div>
        </div>
-
-    <% } %>
-
 
 
        <div class="hero-unit">

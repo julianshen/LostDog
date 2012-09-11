@@ -1,6 +1,7 @@
 var cons = require('consolidate');
 var express = require('express');
 var util = require('sys');
+var dbQuery = require('../db/LDquery')();
 
 //Initialize upload folder
 var uploadFolder = __dirname + '/uploads'
@@ -36,10 +37,28 @@ app.set('views', __dirname + '/views');
 //Routing
 //Index
 app.get('/', function(req,res) {
-    res.render('index.ejs', {
-        req: req,
-        app: app,
-        app_id: process.env.FACEBOOK_APPID,
+
+    dbQuery.postsListAll(function(err, records) {
+        res.render('index.ejs', {
+            req: req,
+            app: app,
+            app_id: process.env.FACEBOOK_APPID,
+            records: records
+        });
+    });
+});
+
+app.get('/show', function(req, res) {
+
+    dbQuery.postsGet(req['id'], function (err, records) {
+        
+        res.render('show.ejs', {
+            website_url: 'http://heroku.com/',
+            req: req,
+            app: app,
+            app_id: process.env.FACEBOOK_APPID,
+            record: records[0]
+        });
     });
 });
 

@@ -1,1 +1,31 @@
-This app is try to help people to find their lost dog. 
+This app is try to help people to find their lost dog.
+
+--
+Mongodb:
+alex.mongohq.com:10018/app7485482
+account/password: lostdog/53521916
+
+--
+API Server:
+http://gentle-hamlet-5222.herokuapp.com/
+
+Get post list:
+GET http://gentle-hamlet-5222.herokuapp.com/post/list
+
+Get post:
+GET http://gentle-hamlet-5222.herokuapp.com/post/<post_id>
+
+Create post:
+POST http://gentle-hamlet-5222.herokuapp.com/post/create
+fields:
+ owner=''
+ species=''
+ name=''
+ breed=''
+ reward=''
+ gender=''
+ color=''
+ where=json.dumps({lat:0, lon:0})
+ photos=json.dumps([])
+ founded=False
+
