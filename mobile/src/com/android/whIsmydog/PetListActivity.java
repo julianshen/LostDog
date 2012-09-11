@@ -15,6 +15,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -108,7 +110,7 @@ public class PetListActivity extends ListActivity {
 			Pet pet = getItem(position);
 			holder.name.setText(pet.name);
 			holder.breed.setText(pet.breed);
-			//pet.photos = new String[] { "10150979413107796" };
+			// pet.photos = new String[] { "10150979413107796" };
 			if (pet.photos != null && pet.photos.length > 0) {
 				String url = " https://graph.facebook.com/" + pet.photos[0]
 						+ "/picture&access_token="
@@ -145,4 +147,18 @@ public class PetListActivity extends ListActivity {
 		startActivity(main);
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.list_main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_refresh:
+			return true;
+		}
+		return false;
+	}
 }

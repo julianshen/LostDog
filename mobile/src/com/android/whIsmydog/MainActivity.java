@@ -94,7 +94,7 @@ public class MainActivity extends MapActivity implements Constants {
 				requester.submit(img, url, picSize, picSize);
 			}
 
-			// mPet.owner = "827463733";
+			//mPet.owner = "4";
 			new AsyncTask<String, Void, User>() {
 
 				@Override

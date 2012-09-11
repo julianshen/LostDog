@@ -33,6 +33,7 @@ public final class R {
         public static final int gender=0x7f080006;
         public static final int login=0x7f080002;
         public static final int mapview=0x7f080003;
+        public static final int menu_refresh=0x7f08000e;
         public static final int menu_settings=0x7f08000d;
         public static final int name=0x7f080005;
         public static final int owner=0x7f080009;
@@ -51,13 +52,15 @@ public final class R {
     }
     public static final class menu {
         public static final int activity_main=0x7f070000;
+        public static final int list_main=0x7f070001;
     }
     public static final class string {
         public static final int app_name=0x7f050000;
         public static final int hello_world=0x7f050001;
-        public static final int i_see=0x7f050004;
+        public static final int i_see=0x7f050005;
+        public static final int menu_refresh=0x7f050003;
         public static final int menu_settings=0x7f050002;
-        public static final int title_activity_main=0x7f050003;
+        public static final int title_activity_main=0x7f050004;
     }
     public static final class style {
         public static final int AppTheme=0x7f060000;

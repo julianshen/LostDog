@@ -44,8 +44,9 @@ public class Pet implements Parcelable {
 		founded = parcel.readInt() == 1;
 		int size = parcel.readInt();
 		photos = new String[size];
-
+		
 		parcel.readStringArray(photos);
+		owner = parcel.readString();
 		double lat = parcel.readDouble();
 		double lng = parcel.readDouble();
 		where = new LatLng();
@@ -70,6 +71,7 @@ public class Pet implements Parcelable {
 		parcel.writeInt(founded ? 1 : 0);
 		parcel.writeInt(photos == null ? 0 : photos.length);
 		parcel.writeStringArray(photos == null ? new String[0] : photos);
+		parcel.writeString(owner);
 		parcel.writeDouble(where.lat);
 		parcel.writeDouble(where.lon);
 		parcel.writeString(reward);
