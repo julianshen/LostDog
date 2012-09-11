@@ -1,0 +1,116 @@
+<% inherits('layouts/facebook_common') %>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+<script>
+    function AlbumCtrl($scope) {
+        $scope.albums=[];
+        $scope.photos=[];
+        $scope.addAlbums = function(data) {
+            var albums = [];
+            angular.forEach(data, function(falbum, key) {
+                var album = {
+                    id: falbum.id,
+                    cover: 'https://graph.facebook.com/' + falbum.cover_photo + '/picture?access_token=' + document.token,
+                    name: falbum.name
+                };
+                albums.push(album);
+            });
+            $scope.albums = albums;
+            console.log('aaa');
+        };
+
+        $scope.loadPhotos = function(albumid) {
+            console.log('aid:'+albumid);
+            $scope.photos = [];
+            FB.api('/'+albumid+'/photos', function(resp) {
+               console.log(resp);
+               $scope.$apply(function() {
+                   angular.forEach(resp.data, function(p) {
+                      $scope.photos.push({id: p.id,url: 'https://graph.facebook.com/' + p.id + '/picture?access_token=' + document.token});
+                   });
+               });
+            });
+        };
+
+        $scope.selectPhoto = function(photoid) {
+            console.log('pid: ' + photoid);
+            $('#formcontainer').show();
+            $('#container').hide();
+            $('#petimg').attr('src', 'https://graph.facebook.com/' + photoid + '/picture?access_token=' + document.token);
+        }
+ 
+        $scope.testadd = function() {
+            var album = {
+                id: 'aaa',
+                cover: 'aaa',
+                name: 'sss'
+            };
+            $scope.albums.push(album);
+        }
+    }
+
+    function listAlbums() {
+        FB.api('me/albums', function(resp) {
+            console.log(resp);
+            var ascope = angular.element($('#container')).scope();
+ 
+            ascope.$apply(function() {ascope.addAlbums(resp.data)});
+        });
+    }
+
+    function onFbLogin(response) {
+        listAlbums();
+    }
+</script>
+
+    <div class="navbar .navbar-static-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#" id='brand'>Pick a photo from your album</a>
+        </div>
+      </div>
+    </div>
+    <div id="container" class="container" ng-controller="AlbumCtrl">
+<div>
+       <h1>Albums</h1>
+       <ul class="thumbnails" id="album">
+       <li class="span3" ng-repeat="album in albums"><a href="#photo" ng-click="loadPhotos(album.id)">
+               <div class="thumbnail">
+                   <img src="{{album.cover}}" style="width:180px; height:180px" /> <h6>{{album.name}}</h6>
+               </div>
+       </a><li>
+       <ul> 
+</div>
+<div>
+       <h1>Photos</h1>
+       <a name="photo" />
+       <ul class="thumbnails" id="photo">
+        <li class="span3" ng-repeat="photo in photos"><a href="#formdata" ng-click="selectPhoto(photo.id)">
+                <div class="thumbnail">
+                   <img src="{{photo.url}}" style="width:180px; height:180px" /> 
+                </div>
+        </a></li>
+       </ul>
+</div>
+</div>
+<div id="formcontainer" class="container" >
+<img src="fake" id="petimg"/>
+<form>
+    <label>Name: </label> <input type="text" placeholder="What's his/her name…" name="name" />
+    <label>Breed: </label> <input type="text" placeholder="What's his/her breed…" name="breed" />
+    <label>Gender: </label> <select name="gender"><option>M</option>
+  <option>F</option></select>
+    <label>Color: </label><input type="text" placeholder="Color...." name="color" /> 
+    <label>Reward: </label><input type="text" placeholder="100USD" name="reward"/>
+    <input type="hidden" name="owner" />
+    <input type="hidden" name="photo" />
+<p>
+    <input type="submit" class="btn-primary"/>
+</p>
+</form>
+</div>
+<script>
+  $('#formcontainer').hide();
+</script>
+</body>
+</html>
