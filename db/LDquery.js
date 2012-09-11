@@ -1,10 +1,12 @@
 var mongo = require('mongodb');
 
 
-var db_name = "lost_dog";
-var db_server = "127.0.0.1";
-var db_port = 27017;
-var collection_name = 'Post';
+var db_server = "alex.mongohq.com";
+var db_port = 10018;
+var db_name = "app7485482";
+var db_account = "lostdog";
+var db_password = "53521916";
+var collection_name = 'post';
 
 module.exports = function() {
     var dbContext = null; 
@@ -13,13 +15,15 @@ module.exports = function() {
 
         dbContext = new mongo.Db(db_name, new mongo.Server(db_server, db_port, {auto_reconnect: true}));
         dbContext.open(function(err, dbContext) {
-            if (err) {
-                return callback(err, "failed to connect");
-            }
+            dbContext.authenticate(db_account, db_password, function() {
+                if (err) {
+                    return callback(err, "failed to connect");
+                }
 
-            var collection = new mongo.Collection(dbContext, collection_name);
+                var collection = new mongo.Collection(dbContext, collection_name);
 
-            callback(null, collection);
+                callback(null, collection);
+            });
         });
             
     }
@@ -51,9 +55,10 @@ module.exports = function() {
 
     function postsNew(req, callback) {
         // req.owner: string (facebook ID)
+        // req.species: string
         // req.name: string
         // req.breed: string
-        // req.gender: string
+        // req.gender: 'M' or 'F'
         // req.color: string
         // req.place.lat req.place.long
         // req.photos: an array of string (facebook ID)     
@@ -66,11 +71,15 @@ module.exports = function() {
     
         var newRecord = {
             owner: req.owner,
+            species: req.species || 'Unicorn',
             name: req.name,
             breed: req.breed || '',
+            reward: req.reward || '',
+            geneder: req.gender || '',
             color: req.color || '',
-            place: req.place || {lat: -1, lon:-1},
-            photos: req.photos || []
+            where: req.place || {lat: -1, lon:-1},
+            photos: req.photos || [],
+            founded: false
         };
 
         _connect( function (err, obj) {
