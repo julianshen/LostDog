@@ -1,4 +1,5 @@
 LostDog {
+   created_date: string (any format XD), 
    name: string,
    species: string (for pet's species)
    breed: string,
