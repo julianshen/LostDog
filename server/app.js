@@ -50,10 +50,10 @@ app.get('/', function(req,res) {
 
 app.get('/show', function(req, res) {
 
-    dbQuery.postsGet(req['id'], function (err, records) {
+    dbQuery.postsGet(req.get('id'), function (err, records) {
         
         res.render('show.ejs', {
-            website_url: 'http://heroku.com/',
+            website_url: 'http://http://lostmydog.herokuapp.com',
             req: req,
             app: app,
             app_id: process.env.FACEBOOK_APPID,

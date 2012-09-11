@@ -120,12 +120,26 @@ module.exports = function() {
 
     }
 
+    function updatePostFBID(post_id, fb_id) {
+
+        _connect( function (err, obj) {
+            if (err !== null) {
+                throw new Error(err);
+            }
+
+            var collection = obj;
+            collection.findAndModify({post_id: post_id}, [], {$set: {facebook_id: fb_id}}, function(err, obj) {});
+        });
+
+    }
+
 
     return {
         postsListAll: postsListAll,
         postsNew: postsNew,
         searchNearby: searchNearby,
         postsGet: postsGet,
+        updatePostFBID: updatePostFBID,
         close: function() {
             if (dbContext !== null)
                 dbContext.close();
