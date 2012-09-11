@@ -1,8 +1,10 @@
 import os
+import urllib
 from flask import Flask
 from flask import request, abort, jsonify
 import pymongo
 import json
+import uuid
 
 app = Flask(__name__)
 app.debug=True
@@ -17,6 +19,7 @@ def hello():
     return 'Lost Dog!'
 
 class Post(object):
+    post_id=''
     owner=''
     species=''
     name=''
@@ -27,6 +30,8 @@ class Post(object):
     where=None
     photos=None
     founded=False
+    def __init__(self):
+        self.post_id=str(uuid.uuid4()).replace('-', '')
     def dict(self):
         dic={}
         for k in self.__dict__:
@@ -45,8 +50,12 @@ def create_post():
         post.gender=request.form['gender']
         post.color=request.form['color']
         post.founded=request.form['founded']
+        post.where=json.loads(request.form['where'])
+        post.photos=json.loads(request.form['photos'])
         db=getDb()
         db.post.save(post.dict())
+        postUri='http://aa.com/show?id='+urllib.urlencode({'id':post.post_id})
+        return jsonify(post_uri=postUri)
     else:
         abort(400)
 

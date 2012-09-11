@@ -69,9 +69,34 @@ app.get('/picpicker', function(req, res) {
     });
 });
 
-app.get('/_create', function(req, res) {
-    dbQuery.postsNew(req, function() {
-        res.send('0');
+app.post('/_create', function(req, res) {
+    console.log('call create: ' + util.inspect(req.body.owner));
+        // req.owner: string (facebook ID)
+        // req.facebook_id: string
+        // req.species: string
+        // req.name: string
+        // req.breed: string
+        // req.gender: 'M' or 'F'
+        // req.color: string
+        // req.place.lat req.place.long
+        // req.photos: an array of string (facebook ID)
+    var data = {
+        owner: req.body.owner,
+        species: req.body.species,
+        name: req.body.name,
+        breed: req.body.breed,
+        gender: req.body.gender,
+        color: req.body.color,
+        photos: [req.body.photos]};
+ 
+    console.log(util.inspect(data)); 
+    dbQuery.postsNew(data, function(err, obj) {
+        console.log('callback');
+        if(err == null) {
+            res.send(util.inspect(obj));
+        } else { 
+            res.send('[]');
+        }
     }); 
 
 });
