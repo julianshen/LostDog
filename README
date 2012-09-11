@@ -1,1 +1,5 @@
-This app is try to help people to find their lost dog. 
+This app is try to help people to find their lost dog.
+
+--
+dev database: Mongodb 
+172.16.1.195:27017
