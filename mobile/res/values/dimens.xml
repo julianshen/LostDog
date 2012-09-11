@@ -2,5 +2,6 @@
 <resources>
 
     <dimen name="pic_size">100dp</dimen>
+    <dimen name="s_pic_size">60dp</dimen>
 
 </resources>

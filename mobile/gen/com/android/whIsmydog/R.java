@@ -12,6 +12,7 @@ public final class R {
     }
     public static final class dimen {
         public static final int pic_size=0x7f040000;
+        public static final int s_pic_size=0x7f040001;
     }
     public static final class drawable {
         public static final int androidmarker=0x7f020000;
@@ -27,14 +28,18 @@ public final class R {
         public static final int logout_down=0x7f02000a;
     }
     public static final class id {
-        public static final int breed=0x7f080008;
+        public static final int breed=0x7f08000c;
+        public static final int found=0x7f080007;
+        public static final int gender=0x7f080006;
         public static final int login=0x7f080002;
         public static final int mapview=0x7f080003;
-        public static final int menu_settings=0x7f080009;
-        public static final int name=0x7f080007;
+        public static final int menu_settings=0x7f08000d;
+        public static final int name=0x7f080005;
+        public static final int owner=0x7f080009;
+        public static final int owner_pic=0x7f080008;
         public static final int pet_pic=0x7f080004;
-        public static final int pic=0x7f080006;
-        public static final int post=0x7f080005;
+        public static final int pic=0x7f08000b;
+        public static final int post=0x7f08000a;
         public static final int txt=0x7f080001;
         public static final int user_pic=0x7f080000;
     }

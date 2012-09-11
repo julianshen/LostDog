@@ -33,6 +33,7 @@ public class PetListActivity extends ListActivity {
 		mAdapter = new PetAdapter((LostDogApp) getApplication());
 		setListAdapter(mAdapter);
 		mServer = new PetServer();
+		getActionBar().setTitle("Find Pet");
 		new AsyncTask<Void, Void, Pet[]>() {
 
 			@Override
@@ -107,7 +108,7 @@ public class PetListActivity extends ListActivity {
 			Pet pet = getItem(position);
 			holder.name.setText(pet.name);
 			holder.breed.setText(pet.breed);
-		//	pet.photos = new String[] { "10150979413107796" };
+			//pet.photos = new String[] { "10150979413107796" };
 			if (pet.photos != null && pet.photos.length > 0) {
 				String url = " https://graph.facebook.com/" + pet.photos[0]
 						+ "/picture&access_token="

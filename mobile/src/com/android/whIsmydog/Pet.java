@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Pet implements Parcelable {
-	Parcelable.Creator<Pet> CREATOR = new Parcelable.Creator<Pet>() {
+	public static Parcelable.Creator<Pet> CREATOR = new Parcelable.Creator<Pet>() {
 
 		@Override
 		public Pet createFromParcel(Parcel parcel) {
@@ -25,12 +25,12 @@ public class Pet implements Parcelable {
 	public String owner;
 	public String reward;
 	public LatLng where;
-	public String spices;
+	public String species;
 	public String gender;
 
 	public static class LatLng {
 		double lat;
-		double lng;
+		double lon;
 	}
 
 	public Pet() {
@@ -42,14 +42,17 @@ public class Pet implements Parcelable {
 		color = parcel.readString();
 		breed = parcel.readString();
 		founded = parcel.readInt() == 1;
+		int size = parcel.readInt();
+		photos = new String[size];
+
 		parcel.readStringArray(photos);
 		double lat = parcel.readDouble();
 		double lng = parcel.readDouble();
 		where = new LatLng();
 		where.lat = lat;
-		where.lng = lng;
+		where.lon = lng;
 		reward = parcel.readString();
-		spices = parcel.readString();
+		species = parcel.readString();
 		gender = parcel.readString();
 	}
 
@@ -65,11 +68,12 @@ public class Pet implements Parcelable {
 		parcel.writeString(color);
 		parcel.writeString(breed);
 		parcel.writeInt(founded ? 1 : 0);
-		parcel.writeStringArray(photos);
+		parcel.writeInt(photos == null ? 0 : photos.length);
+		parcel.writeStringArray(photos == null ? new String[0] : photos);
 		parcel.writeDouble(where.lat);
-		parcel.writeDouble(where.lng);
+		parcel.writeDouble(where.lon);
 		parcel.writeString(reward);
-		parcel.writeString(spices);
+		parcel.writeString(species);
 		parcel.writeString(gender);
 
 	}

@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@android:color/white" >
+    android:background="@android:color/white"
+    android:orientation="vertical" >
 
     <com.google.android.maps.MapView
         android:id="@+id/mapview"
@@ -12,17 +12,62 @@
         android:apiKey="0mT9hVOpgqoW8X9nsllOffH4bGcfu5T0cHQfXZg"
         android:clickable="true" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
         <ImageView
             android:id="@+id/pet_pic"
             android:layout_width="@dimen/pic_size"
             android:layout_height="@dimen/pic_size"
-            android:layout_gravity="center" />
-    </LinearLayout>
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/pet_pic"
+            android:padding="6dp"
+            android:textAppearance="?android:attr/textAppearanceLargeInverse" />
+
+        <TextView
+            android:id="@+id/gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/name"
+            android:layout_toRightOf="@id/pet_pic"
+            android:padding="6dp"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse" />
+
+        <TextView
+            android:id="@+id/found"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/gender"
+            android:padding="6dp"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse" />
+
+
+        <ImageView
+            android:id="@+id/owner_pic"
+            android:layout_width="@dimen/s_pic_size"
+            android:layout_height="@dimen/s_pic_size"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/found" />
+
+        <TextView
+            android:id="@+id/owner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/found"
+            android:layout_toLeftOf="@id/owner_pic"
+            android:padding="6dp"
+            android:textColor="#FF909090"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse" />
+    </RelativeLayout>
 
     <Button
         android:id="@+id/post"
