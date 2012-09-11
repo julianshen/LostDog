@@ -1,5 +1,10 @@
 This app is try to help people to find their lost dog.
 
 --
-dev database: Mongodb 
-172.16.1.195:27017
+Mongodb:
+alex.mongohq.com:10018/app7485482
+account/password: lostdog/53521916
+
+--
+API Server:
+http://gentle-hamlet-5222.herokuapp.com/
