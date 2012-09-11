@@ -75,7 +75,7 @@ module.exports = function() {
             name: req.name,
             breed: req.breed || '',
             reward: req.reward || '',
-            geneder: req.gender || '',
+            gender: req.gender || '',
             color: req.color || '',
             where: req.place || {lat: -1, lon:-1},
             photos: req.photos || [],
