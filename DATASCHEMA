@@ -1,0 +1,19 @@
+LostDog {
+   name: string,
+   breed: string,
+   gender: string (or int),
+   color: string,
+   reward: string (or int),
+   where: location,
+   owner: string (Facebook ID),
+   photo: string (Facebook photo ID),
+   founded: boolean
+}
+
+straydog {
+   breed: string,
+   gender: string (or int),
+   color: string,
+   where: location,
+   photo: string (Facebook photo ID)
+}
