@@ -90,8 +90,13 @@ app.post('/_create', function(req, res) {
         photos: [req.body.photos]};
  
     console.log(util.inspect(data)); 
-    dbQuery.postsNew(data, function() {
-        res.send('0');
+    dbQuery.postsNew(data, function(err, obj) {
+        console.log('callback');
+        if(err == null) {
+            res.send(util.inspect(obj));
+        } else { 
+            res.send('[]');
+        }
     }); 
 
 });

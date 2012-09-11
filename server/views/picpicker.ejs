@@ -70,7 +70,10 @@
                photos: $('#photo').val() 
             };
 
-            jQuery.post('_create', data);
+            jQuery.post('_create', data, function(resp) {
+               console.log('success');
+               console.log(resp);
+            });
         }
  
         $scope.testadd = function() {
