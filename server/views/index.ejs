@@ -32,24 +32,42 @@
     <div class="container">
        <div>
        </div>
+
+    <%= records.length %>
+
+
+    <% for (var idx = 0; idx < records.length; idx++) { var rec = records[idx]; %>
        <div class="hero-unit">
            <div class="row" >
            <div class="span2">
+
+            <% for (var pi in rec.photos) {  var photoId = rec.photos[pi]; %>
+
            <img src="https://fbcdn-photos-a.akamaihd.net/hphotos-ak-ash4/200351_208871915806336_6751907_a.jpg" class="img-polaroid"/>
+
+            <% } %>
+
            </div>
            <div class="span8">
-               <h3>Beast</h3>
-               <p><b>Breed: </b> Puli</p>
-               <p><b>Gender: </b> Male</p>
-               <p><b>Age: </b>1</p>
+               <h3><% rec.name %></h3>
+               <p><b>Breed: </b> <%= rec.breed %></p>
+               <p><b>Gender: </b> <% if (rec.gender === 'M') console.log('Male'); else if(rec.gender === 'F') console.log('Female'); %></p>
+               <p><b>Color: </b> <%= rec.color %></p>
                <p><b>Description: </b>I live in Palo Alto with Mark and Cilla. I am extremely cute.</p>
                <p><b>Posted by: </b> <img src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/157340_4_3955636_q.jpg" class="img-rounded"/><small>Mark Zuckerberg<small></p>
+               <p><b>Reward:<b><%= rec.reward %></p>
 
+                <p><b>Where I last time saw it:</b></p>
+                <p><iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/?ie=UTF8&ll=<%=rec.where.lat %>,<%=rec.where.lon %>&spn=0.010964,0.019269&t=m&z=4&output=embed"></iframe></p>
            </div>
            </div>
        </div>
+
+    <% } %>
+
+
+
        <div class="hero-unit">
-           <h1>Hello</h1>
        <div> 
     </div>
 </body>
