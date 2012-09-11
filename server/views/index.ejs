@@ -1,0 +1,56 @@
+<% inherits('layouts/facebook_common') %>
+<script>
+  function onFbLogin(response) {
+      console.log('The status of the session is: ' + response.status);
+      FB.api('/me?fields=id,name', function(mydata) {
+          //console.log(mydata);
+          var uContainer = document.getElementById('faceuser');
+          if(uContainer) {
+              uContainer.innerHTML = '<a href="#"><div><img src="http://graph.facebook.com/'+mydata.id+'/picture" width="30px" height="30px"/> ' + mydata.name + '</div></a>';
+          } else {
+              console.log('cannot show user');
+          }
+      });
+  }
+</script>
+
+    <div class="navbar .navbar-static-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#">{{title}}</a>
+          <div class="nav-collapse">
+          <ul class="nav pull-right">
+              <li class="divider-vertical"></li>
+              <li><a href="#" >Add</a></li>
+              <li class="divider-vertical"></li>
+              <li><p class="navbar-text" id="faceuser"><a href="#" onclick="loginFB();return false;">Login</a></p></li>
+          </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+       <div>
+       </div>
+       <div class="hero-unit">
+           <div class="row" >
+           <div class="span2">
+           <img src="https://fbcdn-photos-a.akamaihd.net/hphotos-ak-ash4/200351_208871915806336_6751907_a.jpg" class="img-polaroid"/>
+           </div>
+           <div class="span8">
+               <h3>Beast</h3>
+               <p><b>Breed: </b> Puli</p>
+               <p><b>Gender: </b> Male</p>
+               <p><b>Age: </b>1</p>
+               <p><b>Description: </b>I live in Palo Alto with Mark and Cilla. I am extremely cute.</p>
+               <p><b>Posted by: </b> <img src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/157340_4_3955636_q.jpg" class="img-rounded"/><small>Mark Zuckerberg<small></p>
+
+           </div>
+           </div>
+       </div>
+       <div class="hero-unit">
+           <h1>Hello</h1>
+       <div> 
+    </div>
+</body>
+</html>
