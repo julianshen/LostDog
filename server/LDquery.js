@@ -74,17 +74,11 @@ module.exports = function() {
         // req.place.lat req.place.long
         // req.photos: an array of string (facebook ID)     
 
-        if (!req.owner) 
-            return false;
-
-        if (!req.name)
-            return false;
-    
         var newRecord = {
             owner: req.owner,
             species: req.species || 'Unicorn',
             facebook_id: req.facebook_id || '',
-            name: req.name,
+            name: req.name || '',
             breed: req.breed || '',
             reward: req.reward || '',
             gender: req.gender || '',
@@ -96,8 +90,11 @@ module.exports = function() {
             founded: false
         };
 
+        console.dir(newRecord);
+
         _connect( function (err, obj) {
             if (err !== null) {
+                console.log("error: " + err);
                 throw new Error(err);
             }
 
