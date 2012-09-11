@@ -1,100 +1,136 @@
 package com.android.whIsmydog;
 
-import com.facebook.android.LoginButton;
-import com.facebook.android.SessionEvents;
-import com.facebook.android.SessionEvents.AuthListener;
-import com.facebook.android.SessionEvents.LogoutListener;
-import com.facebook.android.SessionStore;
-import com.facebook.android.Utility;
-import com.facebook.android.AsyncFacebookRunner;
-import com.facebook.android.Facebook;
+import java.util.ArrayList;
+import java.util.List;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
+import android.view.Menu;
+import android.view.MenuItem;
 
-public class MainActivity extends Activity implements Constants {
-	TextView mText;
-	LoginButton mLoginButton;
-	private static final int AUTHORIZE_ACTIVITY_RESULT_CODE = 101;
-	private static final String permissions[] = new String[] {
-			"publish_actions", "publish_stream" };
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.ItemizedOverlay;
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapController;
+import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
+import com.google.android.maps.OverlayItem;
+
+public class MainActivity extends MapActivity implements Constants {
+	MapView mMapView;
+	MapController mController;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		mText = (TextView) findViewById(R.id.txt);
-		mLoginButton = (LoginButton) findViewById(R.id.login);
-		Utility.mFacebook = new Facebook(APP_ID);
-		// Instantiate the asynrunner object for asynchronous api calls.
-		Utility.mAsyncRunner = new AsyncFacebookRunner(Utility.mFacebook);
+		setContentView(R.layout.mapview);
+		mMapView = (MapView) findViewById(R.id.mapview);
+		mMapView.setBuiltInZoomControls(true);
+		mMapView.setSatellite(false); // Set satellite view
+		mController = mMapView.getController();
+		mController.setZoom(18);
+		LocationManager myLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-		// restore session if one exists
-		SessionStore.restore(Utility.mFacebook, this);
-		SessionEvents.addAuthListener(new FbAPIsAuthListener());
-		SessionEvents.addLogoutListener(new FbAPIsLogoutListener());
-		mLoginButton.init(this, AUTHORIZE_ACTIVITY_RESULT_CODE,
-				Utility.mFacebook, permissions);
+		MyLocationListener listener = new MyLocationListener();
 
-		if (Utility.mFacebook.isSessionValid()) {
-			requestUserData();
+		myLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+				0, 0, listener);
+
+		// Get the current location in start-up
+		GeoPoint initGeoPoint = new GeoPoint((int) (myLocationManager
+				.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+				.getLatitude() * 1000000), (int) (myLocationManager
+				.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+				.getLongitude() * 1000000));
+		mController.animateTo(initGeoPoint);
+		Drawable drawable = getResources()
+				.getDrawable(R.drawable.androidmarker);
+		HelloItemizedOverlay itemizedoverlay = new HelloItemizedOverlay(
+				drawable, this);
+		OverlayItem overlayitem = new OverlayItem(initGeoPoint, "Hola, Mundo!",
+				"I'm in Mexico City!");
+		itemizedoverlay.addOverlay(overlayitem);
+		List<Overlay> mOverlays = mMapView.getOverlays();
+		mOverlays.add(itemizedoverlay);
+	}
+
+	public static class HelloItemizedOverlay extends ItemizedOverlay {
+		private ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
+
+		Context mContext;
+
+		public HelloItemizedOverlay(Drawable defaultMarker, Context context) {
+			super(boundCenterBottom(defaultMarker));
+			mContext = context;
+		}
+
+		public void addOverlay(OverlayItem overlay) {
+			mOverlays.add(overlay);
+			populate();
+		}
+
+		@Override
+		protected OverlayItem createItem(int i) {
+			return mOverlays.get(i);
+		}
+
+		@Override
+		public int size() {
+			return mOverlays.size();
 		}
 	}
 
-	private static final String TAG = "LoginActivity";
+	private class MyLocationListener implements LocationListener {
+
+		public void onLocationChanged(Location argLocation) {
+			// TODO Auto-generated method stub
+			GeoPoint myGeoPoint = new GeoPoint(
+					(int) (argLocation.getLatitude() * 1000000),
+					(int) (argLocation.getLongitude() * 1000000));
+
+			mController.animateTo(myGeoPoint);
+		}
+
+		public void onProviderDisabled(String provider) {
+			// TODO Auto-generated method stub
+		}
+
+		public void onProviderEnabled(String provider) {
+			// TODO Auto-generated method stub
+		}
+
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			// TODO Auto-generated method stub
+		}
+	}
 
 	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.d(TAG, "onActivityResult " + requestCode + " resultCode "
-				+ resultCode);
-		switch (requestCode) {
-		/*
-		 * if this is the activity result from authorization flow, do a call
-		 * back to authorizeCallback Source Tag: login_tag
-		 */
-		case AUTHORIZE_ACTIVITY_RESULT_CODE: {
-			Utility.mFacebook.authorizeCallback(requestCode, resultCode, data);
-			Log.d(TAG, "success");
-			break;
-		}
-		}
+	protected boolean isRouteDisplayed() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
-	private void requestUserData() {
-		Intent mainActivity = new Intent(this, MainActivity.class);
-		//startActivity(mainActivity);
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_main, menu);
+		return true;
 	}
 
-	public class FbAPIsAuthListener implements AuthListener {
-
-		@Override
-		public void onAuthSucceed() {
-			mText.setText("You have logged In!");
-			requestUserData();
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_settings:
+			Intent intent = new Intent(this, LoginActivity.class);
+			intent.putExtra("redirect", false);
+			startActivity(intent);
+			return true;
 		}
-
-		@Override
-		public void onAuthFail(String error) {
-			mText.setText("Login Failed: " + error);
-		}
+		return false;
 	}
 
-	/*
-	 * The Callback for notifying the application when log out starts and
-	 * finishes.
-	 */
-	public class FbAPIsLogoutListener implements LogoutListener {
-		@Override
-		public void onLogoutBegin() {
-			mText.setText("Logging out...");
-		}
-
-		@Override
-		public void onLogoutFinish() {
-			mText.setText("You have logged out! ");
-		}
-	}
 }
