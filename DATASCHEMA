@@ -1,5 +1,6 @@
 LostDog {
    created_date: string (any format XD), 
+   facebook_id: string (the post's facebook id),
    name: string,
    species: string (for pet's species)
    breed: string,
