@@ -49,8 +49,28 @@
             console.log($scope.petBreed);
             console.log($scope.petGender);
             console.log($scope.petColor);
-            console.log($scope.petOwner);
-            console.log($scope.petPhoto);
+            console.log($('#owner').val());
+            console.log($('#photo').val());
+        // req.owner: string (facebook ID)
+        // req.facebook_id: string
+        // req.species: string
+        // req.name: string
+        // req.breed: string
+        // req.gender: 'M' or 'F'
+        // req.color: string
+        // req.place.lat req.place.long
+        // req.photos: an array of string (facebook ID)  
+            var data = {
+               owner: $('#owner').val(),
+               species: $scope.petSpec,
+               breed: $scope.petBreed,
+               gender: $scope.petGender,
+               color: $scope.petColor,
+               owner: $('#owner').val(),
+               photos: $('#photo').val() 
+            };
+
+            jQuery.post('_create', data);
         }
  
         $scope.testadd = function() {
