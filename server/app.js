@@ -1,7 +1,7 @@
 var cons = require('consolidate');
 var express = require('express');
 var util = require('sys');
-var dbQuery = require('../db/LDquery')();
+var dbQuery = require('./LDquery')();
 
 //Initialize upload folder
 var uploadFolder = __dirname + '/uploads'
@@ -67,6 +67,13 @@ app.get('/picpicker', function(req, res) {
         req:req,
         app:app,
     });
+});
+
+app.get('/_create', function(req, res) {
+    dbQuery.postsNew(req, function() {
+        res.send('0');
+    }); 
+
 });
 
 //Facebook channel files

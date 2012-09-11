@@ -7,6 +7,7 @@
 <script>
   function __onLogin(response) {
       document.token = response.authResponse.accessToken;
+      document.uid = response.authResponse.userID;
       if(typeof(onFbLogin) == 'function') { 
           onFbLogin(response);
       } 
