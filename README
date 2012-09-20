@@ -1,9 +1,6 @@
 This app is try to help people to find their lost dog.
 
---
-Mongodb:
-alex.mongohq.com:10018/app7485482
-account/password: lostdog/53521916
+This is the project developed on Facebook WorldHack Taipei
 
 --
 API Server:
